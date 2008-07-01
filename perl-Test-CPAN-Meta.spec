@@ -1,5 +1,5 @@
 Name:           perl-Test-CPAN-Meta
-Version:        0.11
+Version:        0.12
 Release:        1%{?dist}
 Summary:        Validation of the META.yml file in a CPAN distribution
 License:        GPL+ or Artistic
@@ -10,7 +10,9 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(Parse::CPAN::Meta) >= 0.02
-BuildRequires:  perl(Test::More)
+BuildRequires:  perl(Test::Builder)
+BuildRequires:  perl(Test::Builder::Tester)
+BuildRequires:  perl(Test::More) >= 0.70
 BuildRequires:  perl(Test::Pod) >= 1.00
 BuildRequires:  perl(Test::Pod::Coverage) >= 0.08
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
@@ -55,6 +57,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jul 01 2008 Steven Pritchard <steve@kspei.com> 0.12-1
+- Update to 0.12.
+- BR Test::Builder and Test::Builder::Tester.
+
 * Wed Jun 04 2008 Steven Pritchard <steve@kspei.com> 0.11-1
 - Update to 0.11.
 
