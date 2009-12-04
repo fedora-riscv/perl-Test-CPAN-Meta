@@ -1,6 +1,6 @@
 Name:           perl-Test-CPAN-Meta
 Version:        0.13
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Validation of the META.yml file in a CPAN distribution
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -57,6 +57,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/*
 
 %changelog
+* Fri Dec  4 2009 Stepan Kasal <skasal@redhat.com> - 0.13-2
+- rebuild against perl 5.10.1
+
 * Wed Oct  7 2009 Marcela Mašláňová <mmaslano@redhat.com> - 0.13-1
 - update to new upstream release
 
