@@ -1,6 +1,6 @@
 Name:           perl-Test-CPAN-Meta
-Version:        0.13
-Release:        3%{?dist}
+Version:        0.17
+Release:        1%{?dist}
 Summary:        Validation of the META.yml file in a CPAN distribution
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -57,6 +57,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/*
 
 %changelog
+* Sat Jul 31 2010 Paul Howarth <paul@city-fan.org> - 0.17-1
+- Update to 0.17
+  - Fix RT#46473: license url with fragment part
+  - Fix RT#47393: "optional_features" as map rather than list
+  - Renamed word() to keyword()
+  - Added identifier() validation
+  - Changed optional_features key from a keyword to an identifier type
+  - Clarified spec defined and user defined keys
+  - Fixed qr// delimiters due to issues with the NOT SIGN symbol
+
 * Thu May 06 2010 Marcela Maslanova <mmaslano@redhat.com> - 0.13-3
 - Mass rebuild with perl-5.12.0
 
