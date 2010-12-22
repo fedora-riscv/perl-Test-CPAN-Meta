@@ -1,6 +1,6 @@
 Name:           perl-Test-CPAN-Meta
 Version:        0.17
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Validation of the META.yml file in a CPAN distribution
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -57,6 +57,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/*
 
 %changelog
+* Wed Dec 22 2010 Marcela Maslanova <mmaslano@redhat.com> - 0.17-2
+- 661697 rebuild for fixing problems with vendorach/lib
+
 * Sat Jul 31 2010 Paul Howarth <paul@city-fan.org> - 0.17-1
 - Update to 0.17
   - Fix RT#46473: license url with fragment part
