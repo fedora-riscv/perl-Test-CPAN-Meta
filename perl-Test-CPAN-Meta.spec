@@ -1,6 +1,6 @@
 Name:           perl-Test-CPAN-Meta
 Version:        0.21
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Validation of the META.yml file in a CPAN distribution
 License:        Artistic 2.0
 Group:          Development/Libraries
@@ -58,6 +58,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jun 12 2012 Petr Pisar <ppisar@redhat.com> - 0.21-2
+- Perl 5.16 rebuild
+
 * Fri Apr 27 2012 Petr Pisar <ppisar@redhat.com> - 0.21-1
 - 0.21 bump
 
