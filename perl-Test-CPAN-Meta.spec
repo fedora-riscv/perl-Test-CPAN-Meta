@@ -1,6 +1,6 @@
 Name:           perl-Test-CPAN-Meta
 Version:        0.21
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Validation of the META.yml file in a CPAN distribution
 License:        Artistic 2.0
 Group:          Development/Libraries
@@ -58,6 +58,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/*
 
 %changelog
+* Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.21-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Tue Jun 12 2012 Petr Pisar <ppisar@redhat.com> - 0.21-2
 - Perl 5.16 rebuild
 
