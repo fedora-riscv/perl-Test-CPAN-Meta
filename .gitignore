@@ -1,2 +1,1 @@
-Test-CPAN-Meta-0.17.tar.gz
-/Test-CPAN-Meta-0.21.tar.gz
+/Test-CPAN-Meta-[0-9.]*.tar.gz

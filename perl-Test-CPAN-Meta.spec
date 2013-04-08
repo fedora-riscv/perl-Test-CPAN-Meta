@@ -1,12 +1,12 @@
 Name:           perl-Test-CPAN-Meta
-Version:        0.21
-Release:        4%{?dist}
+Version:        0.23
+Release:        1%{?dist}
 Summary:        Validation of the META.yml file in a CPAN distribution
 License:        Artistic 2.0
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Test-CPAN-Meta/
 Source0:        http://www.cpan.org/authors/id/B/BA/BARBIE/Test-CPAN-Meta-%{version}.tar.gz
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(id -nu)
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(IO::File)
@@ -16,7 +16,7 @@ BuildRequires:  perl(Test::Builder::Tester)
 BuildRequires:  perl(Test::More) >= 0.70
 BuildRequires:  perl(Test::Pod) >= 1.00
 BuildRequires:  perl(Test::Pod::Coverage) >= 0.08
-Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 
 %description
 This module was written to ensure that a META.yml file, provided with a
@@ -32,18 +32,14 @@ iconv -f iso-8859-1 -t utf-8 LICENSE > LICENSE.tmp
 mv -f LICENSE.tmp LICENSE
 
 %build
-%{__perl} Makefile.PL INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
-%{_fixperms} $RPM_BUILD_ROOT/*
+%{_fixperms} $RPM_BUILD_ROOT
 
 %check
 make test AUTOMATED_TESTING=1
@@ -52,12 +48,27 @@ make test AUTOMATED_TESTING=1
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(-,root,root,-)
 %doc Changes LICENSE README examples/
-%{perl_vendorlib}/*
-%{_mandir}/man3/*
+%{perl_vendorlib}/Test/
+%{_mandir}/man3/Test::CPAN::Meta.3pm*
+%{_mandir}/man3/Test::CPAN::Meta::Version.3pm*
 
 %changelog
+* Mon Apr  8 2013 Paul Howarth <paul@city-fan.org> - 0.23-1
+- Update to 0.23
+  - Updated INSTALL instructions
+  - Added minimum perl version (5.006)
+  - Reworked Makefile.PL for clarity
+  - Implemented Perl::Critic suggestions
+  - Added meta_yaml_ok test and example
+  - Several Version.pm updates, including new() parameter name change:
+    'yaml' is now 'data'
+  - Changes file dates changed to meet W3CDTF standards
+- Don't use macros for commands
+- Don't need to remove empty directories from the buildroot
+- Make %%files list more explicit
+- Drop %%defattr, redundant since rpm 4.4
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.21-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
@@ -80,7 +91,7 @@ rm -rf $RPM_BUILD_ROOT
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
 * Wed Dec 22 2010 Marcela Maslanova <mmaslano@redhat.com> - 0.17-2
-- 661697 rebuild for fixing problems with vendorach/lib
+- Rebuild to fix problems with vendorarch/lib (#661697)
 
 * Sat Jul 31 2010 Paul Howarth <paul@city-fan.org> - 0.17-1
 - Update to 0.17
