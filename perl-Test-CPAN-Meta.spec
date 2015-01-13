@@ -1,21 +1,30 @@
 Name:           perl-Test-CPAN-Meta
-Version:        0.23
-Release:        5%{?dist}
+Version:        0.24
+Release:        1%{?dist}
 Summary:        Validation of the META.yml file in a CPAN distribution
 License:        Artistic 2.0
-Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Test-CPAN-Meta/
 Source0:        http://www.cpan.org/authors/id/B/BA/BARBIE/Test-CPAN-Meta-%{version}.tar.gz
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(id -nu)
+Patch0:         Test-CPAN-Meta-0.24-utf8.patch
 BuildArch:      noarch
+# Module Build
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils::MakeMaker)
-BuildRequires:  perl(IO::File)
+# Module Runtime
 BuildRequires:  perl(Parse::CPAN::Meta) >= 0.02
+BuildRequires:  perl(strict)
 BuildRequires:  perl(Test::Builder)
+BuildRequires:  perl(vars)
+BuildRequires:  perl(warnings)
+# Test Suite
+BuildRequires:  perl(IO::File)
 BuildRequires:  perl(Test::Builder::Tester)
-BuildRequires:  perl(Test::More) >= 0.70
+BuildRequires:  perl(Test::More) >= 0.62
+# Optional Tests
+BuildRequires:  perl(Test::CPAN::Meta::JSON)
 BuildRequires:  perl(Test::Pod) >= 1.00
 BuildRequires:  perl(Test::Pod::Coverage) >= 0.08
+# Runtime
 Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 
 %description
@@ -28,32 +37,38 @@ Module::Install.
 %prep
 %setup -q -n Test-CPAN-Meta-%{version}
 
-iconv -f iso-8859-1 -t utf-8 LICENSE > LICENSE.tmp
-mv -f LICENSE.tmp LICENSE
+# Re-code documentation as UTF-8
+%patch0
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-%{_fixperms} $RPM_BUILD_ROOT
+make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -exec rm -f {} \;
+%{_fixperms} %{buildroot}
 
 %check
 make test AUTOMATED_TESTING=1
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
 %files
-%doc Changes LICENSE README examples/
+%license LICENSE
+%doc Changes README examples/
 %{perl_vendorlib}/Test/
-%{_mandir}/man3/Test::CPAN::Meta.3pm*
-%{_mandir}/man3/Test::CPAN::Meta::Version.3pm*
+%{_mandir}/man3/Test::CPAN::Meta.3*
+%{_mandir}/man3/Test::CPAN::Meta::Version.3*
 
 %changelog
+* Tue Jan 13 2015 Paul Howarth <paul@city-fan.org> - 0.24-1
+- Update to 0.24
+  - Extended META test suite
+  - Added META.json and tests
+  - Documentation updates
+- Classify buildreqs by usage
+- Use a patch rather than scripted iconv to fix character encoding
+- Modernize spec
+
 * Wed Aug 27 2014 Jitka Plesnikova <jplesnik@redhat.com> - 0.23-5
 - Perl 5.20 rebuild
 
