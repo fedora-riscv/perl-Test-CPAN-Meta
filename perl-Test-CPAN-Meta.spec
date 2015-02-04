@@ -1,6 +1,6 @@
 Name:           perl-Test-CPAN-Meta
 Version:        0.24
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Validation of the META.yml file in a CPAN distribution
 License:        Artistic 2.0
 URL:            http://search.cpan.org/dist/Test-CPAN-Meta/
@@ -21,7 +21,11 @@ BuildRequires:  perl(IO::File)
 BuildRequires:  perl(Test::Builder::Tester)
 BuildRequires:  perl(Test::More) >= 0.62
 # Optional Tests
+%if !%{defined perl_bootstrap}
+# Break build-cycle: perl-Test-CPAN-Meta → perl-Test-CPAN-Meta-JSON
+# → perl-Test-CPAN-Meta
 BuildRequires:  perl(Test::CPAN::Meta::JSON)
+%endif
 BuildRequires:  perl(Test::Pod) >= 1.00
 BuildRequires:  perl(Test::Pod::Coverage) >= 0.08
 # Runtime
@@ -60,6 +64,10 @@ make test AUTOMATED_TESTING=1
 %{_mandir}/man3/Test::CPAN::Meta::Version.3*
 
 %changelog
+* Wed Feb 04 2015 Petr Pisar <ppisar@redhat.com> - 0.24-2
+- Break build-cycle: perl-Test-CPAN-Meta → perl-Test-CPAN-Meta-JSON →
+  perl-Test-CPAN-Meta
+
 * Tue Jan 13 2015 Paul Howarth <paul@city-fan.org> - 0.24-1
 - Update to 0.24
   - Extended META test suite
