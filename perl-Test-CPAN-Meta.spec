@@ -1,11 +1,11 @@
 Name:           perl-Test-CPAN-Meta
-Version:        0.24
-Release:        2%{?dist}
+Version:        0.25
+Release:        1%{?dist}
 Summary:        Validation of the META.yml file in a CPAN distribution
 License:        Artistic 2.0
 URL:            http://search.cpan.org/dist/Test-CPAN-Meta/
 Source0:        http://www.cpan.org/authors/id/B/BA/BARBIE/Test-CPAN-Meta-%{version}.tar.gz
-Patch0:         Test-CPAN-Meta-0.24-utf8.patch
+Patch0:         Test-CPAN-Meta-0.25-utf8.patch
 BuildArch:      noarch
 # Module Build
 BuildRequires:  perl
@@ -64,6 +64,13 @@ make test AUTOMATED_TESTING=1
 %{_mandir}/man3/Test::CPAN::Meta::Version.3*
 
 %changelog
+* Wed May  6 2015 Paul Howarth <paul@city-fan.org> - 0.25-1
+- Update to 0.25
+  - POD fix for usage example
+  - Removed Test::CPAN::Meta from the recommends list, as CPAN.pm tries to
+    install it first (CPAN RT#104023)
+- Update UTF8 patch
+
 * Wed Feb 04 2015 Petr Pisar <ppisar@redhat.com> - 0.24-2
 - Break build-cycle: perl-Test-CPAN-Meta → perl-Test-CPAN-Meta-JSON →
   perl-Test-CPAN-Meta
