@@ -9,6 +9,7 @@ Patch0:         Test-CPAN-Meta-0.25-utf8.patch
 BuildArch:      noarch
 # Module Build
 BuildRequires:  perl
+BuildRequires:  perl-generators
 BuildRequires:  perl(ExtUtils::MakeMaker)
 # Module Runtime
 BuildRequires:  perl(Parse::CPAN::Meta) >= 0.02
