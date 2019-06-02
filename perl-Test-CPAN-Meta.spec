@@ -1,6 +1,6 @@
 Name:           perl-Test-CPAN-Meta
 Version:        0.25
-Release:        17%{?dist}
+Release:        18%{?dist}
 Summary:        Validation of the META.yml file in a CPAN distribution
 License:        Artistic 2.0
 URL:            https://metacpan.org/release/Test-CPAN-Meta
@@ -65,6 +65,9 @@ make test AUTOMATED_TESTING=1
 %{_mandir}/man3/Test::CPAN::Meta::Version.3*
 
 %changelog
+* Sun Jun 02 2019 Jitka Plesnikova <jplesnik@redhat.com> - 0.25-18
+- Perl 5.30 re-rebuild of bootstrapped packages
+
 * Fri May 31 2019 Jitka Plesnikova <jplesnik@redhat.com> - 0.25-17
 - Perl 5.30 rebuild
 
