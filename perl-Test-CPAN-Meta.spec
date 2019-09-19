@@ -1,3 +1,10 @@
+# Run optional test
+%if ! (0%{?rhel})
+%bcond_without perl_Test_CPAN_Meta_enables_optional_test
+%else
+%bcond_with perl_Test_CPAN_Meta_enables_optional_test
+%endif
+
 Name:           perl-Test-CPAN-Meta
 Version:        0.25
 Release:        19%{?dist}
@@ -22,7 +29,7 @@ BuildRequires:  perl(IO::File)
 BuildRequires:  perl(Test::Builder::Tester)
 BuildRequires:  perl(Test::More) >= 0.62
 # Optional Tests
-%if !%{defined perl_bootstrap}
+%if %{with perl_Test_CPAN_Meta_enables_optional_test} && !%{defined perl_bootstrap}
 # Break build-cycle: perl-Test-CPAN-Meta → perl-Test-CPAN-Meta-JSON
 # → perl-Test-CPAN-Meta
 BuildRequires:  perl(Test::CPAN::Meta::JSON)
