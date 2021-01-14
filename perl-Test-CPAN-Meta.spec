@@ -7,17 +7,19 @@
 
 Name:           perl-Test-CPAN-Meta
 Version:        0.25
-Release:        23%{?dist}
+Release:        24%{?dist}
 Summary:        Validation of the META.yml file in a CPAN distribution
 License:        Artistic 2.0
 URL:            https://metacpan.org/release/Test-CPAN-Meta
-Source0:        https://cpan.metacpan.org/authors/id/B/BA/BARBIE/Test-CPAN-Meta-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/modules/by-module/Test/Test-CPAN-Meta-%{version}.tar.gz
 Patch0:         Test-CPAN-Meta-0.25-utf8.patch
 BuildArch:      noarch
 # Module Build
-BuildRequires: make
-BuildRequires:  perl-interpreter
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  make
 BuildRequires:  perl-generators
+BuildRequires:  perl-interpreter
 BuildRequires:  perl(ExtUtils::MakeMaker)
 # Module Runtime
 BuildRequires:  perl(Parse::CPAN::Meta) >= 0.02
@@ -59,8 +61,8 @@ make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-%{_fixperms} %{buildroot}
+find %{buildroot} -type f -name .packlist -delete
+%{_fixperms} -c %{buildroot}
 
 %check
 make test AUTOMATED_TESTING=1
@@ -73,6 +75,13 @@ make test AUTOMATED_TESTING=1
 %{_mandir}/man3/Test::CPAN::Meta::Version.3*
 
 %changelog
+* Thu Jan 14 2021 Paul Howarth <paul@city-fan.org> - 0.25-24
+- Spec tidy-up
+  - Use author-independent source URL
+  - Specify all build dependencies
+  - Simplify find command using -delete
+  - Fix permissions verbosely
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.25-23
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
